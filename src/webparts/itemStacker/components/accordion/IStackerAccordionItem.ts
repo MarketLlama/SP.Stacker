@@ -1,7 +1,7 @@
 export interface IStackerAccordionItem {
   name : string;
   text : string;
-  show : string;
+  show : boolean;
   isOpen : boolean;
-  state : string;
+  state : boolean;
 }

@@ -4,7 +4,10 @@ import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  IWebPartPropertiesMetadata,
+  IPropertyPaneDropdownOption,
+  PropertyPaneDropdown
 } from '@microsoft/sp-webpart-base';
 import SiteServices from "./services/SiteServices";
 import * as strings from 'ItemStackerWebPartStrings';
@@ -20,29 +23,67 @@ import { PropertyFieldNumber } from '@pnp/spfx-property-controls/lib/PropertyFie
 export interface IItemStackerWebPartProps {
   collectionData: any[];
   numberOfItems : number;
+  restrictedGroup : string;
 }
 
 export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStackerWebPartProps> {
+
+  private dropdownOptions: IPropertyPaneDropdownOption[] = [];
+  private loadingIndicator: boolean = true;
 
   public render(): void {
     const element: React.ReactElement<IItemStackerProps > = React.createElement(
       ItemStacker,
       {
+        context : this.context,
         collectionData: this.properties.collectionData? this.properties.collectionData : [],
-        displayMode : this.displayMode
+        displayMode : this.displayMode,
+        fnSetText : (value : string , index : number) =>{
+          this.properties.collectionData[index].text = value;
+        },
+        restrictedGroup : this.properties.restrictedGroup
       }
     );
 
     ReactDom.render(element, this.domElement);
   }
 
-  protected getStackItems = async () =>{
-    const siteServices = new SiteServices(this.context);
-    siteServices.checkUserInGroup('restricted');
+  protected onPropertyPaneConfigurationStart(): void {
+    this.getSiteGroups().then((response) => {
+      this.dropdownOptions = response;
+      this.context.propertyPane.refresh();
+      this.loadingIndicator = false;
+    });
+  }
+
+  protected getSiteGroups = () =>{
+    return new Promise<IPropertyPaneDropdownOption[]>(async (resolve, reject) => {
+      try {
+        let options: Array<IPropertyPaneDropdownOption> = new Array<IPropertyPaneDropdownOption>();
+        const siteServices = new SiteServices(this.context);
+        const groups = await siteServices.getSiteGroupNames();
+        for (const group of groups) {
+          options.push({
+            key : group,
+            text : group
+          });
+        }
+        resolve(options);
+      } catch (error) {
+        console.log(error);
+        reject();
+      }
+    });
   }
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
+  }
+
+  protected get propertiesMetadata(): IWebPartPropertiesMetadata {
+    return {
+      'collectionData': { isSearchablePlainText: true }
+    };
   }
 
   protected get dataVersion(): Version {
@@ -51,6 +92,7 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
+      showLoadingIndicator: this.loadingIndicator,
       pages: [
         {
           header: {
@@ -76,17 +118,7 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
                     {
                       id: "state",
                       title: "Is restricted?",
-                      type: CustomCollectionFieldType.dropdown,
-                      options: [
-                        {
-                          key: "no",
-                          text: "No"
-                        },
-                        {
-                          key: "yes",
-                          text: "Yes"
-                        }
-                      ],
+                      type: CustomCollectionFieldType.boolean,
                       required: true
                     },
                     {
@@ -102,15 +134,10 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
                   ],
                   disabled: false
                 }),
-                PropertyFieldNumber("numberValue", {
-                  key: "numberValue",
-                  label: "Number of items",
-                  description: "Number of accordion fields",
-                  value: this.properties.numberOfItems,
-                  maxValue: 10,
-                  minValue: 1,
-                  disabled: false
-                })
+                PropertyPaneDropdown('restrictedGroup', {
+                  label: "Select Restricted Group",
+                  options: this.dropdownOptions,
+                }),
               ]
             }
           ]

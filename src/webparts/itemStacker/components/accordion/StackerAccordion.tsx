@@ -8,6 +8,7 @@ import { DisplayMode } from "@microsoft/sp-core-library";
 export interface StackerAccordionProps {
   items : IStackerAccordionItem[];
   displayMode : DisplayMode;
+  fnUpdate : Function;
 }
 
 export interface StackerAccordionState {
@@ -22,22 +23,24 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     return (
 
       <Accordion allowMultiple={true}>
-        {this.props.items.length > 0 ? this.props.items.map(item => {
-          return (
-            <AccordionItem title={item.name} expanded={item.isOpen}>
-              <RichText value={item.text}
-                        onChange={(text)=>this._setText(text)}
-                        isEditMode={(this.props.displayMode == DisplayMode.Edit)? true : false}
-              />
-            </AccordionItem>
-          );
+        {this.props.items.length > 0 ? this.props.items.map((item, index) => {
+          if(item.show){
+            return (
+              <AccordionItem title={item.name} expanded={item.isOpen}>
+                <RichText value={item.text}
+                          onChange={(text)=>this._setText(text, index)}
+                          isEditMode={(this.props.displayMode == DisplayMode.Edit)? true : false}
+                />
+              </AccordionItem>
+            );
+          }
         }) : null}
       </Accordion>
     );
   }
 
-  private _setText = (text : string) : string => {
-
+  private _setText = (text : string, index) : string => {
+    this.props.fnUpdate(text, index);
     return text;
   }
 

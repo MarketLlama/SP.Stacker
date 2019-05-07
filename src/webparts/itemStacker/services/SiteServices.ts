@@ -15,9 +15,11 @@ class SiteServices {
 
   public checkUserInGroup = async(groupName : string) => {
     return new Promise<any>( async (resolve, reject) => {
-      const group : SiteGroup = await this._getGroup(groupName);
+      const group : any = await this._getGroup(groupName);
       const currentUser = await this._getCurrentUser();
-      console.log(group.users);
+
+      console.log(currentUser);
+      console.log(group);
     });
   }
 
@@ -28,7 +30,7 @@ class SiteServices {
           let groupNames = [];
           console.log(groups);
           groups.forEach(group =>{
-            groupNames.push(group.Name);
+            groupNames.push(group.Title);
           });
           resolve(groupNames);
         });
