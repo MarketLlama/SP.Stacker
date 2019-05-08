@@ -14,12 +14,21 @@ class SiteServices {
   }
 
   public checkUserInGroup = async(groupName : string) => {
-    return new Promise<any>( async (resolve, reject) => {
-      const group : any = await this._getGroup(groupName);
-      const currentUser = await this._getCurrentUser();
-
-      console.log(currentUser);
-      console.log(group);
+    return new Promise<boolean>( async (resolve, reject) => {
+      try {
+        let isInGroup = false;
+        const groupUsers : any[] = await this._getGroup(groupName);
+        const currentUser = await this._getCurrentUser();
+        groupUsers.forEach(user =>{
+          if(user.LoginName == currentUser.LoginName){
+            isInGroup = true;
+          }
+        });
+        resolve(isInGroup);
+      } catch (error) {
+        console.log(error);
+        reject();
+      }
     });
   }
 
@@ -42,10 +51,10 @@ class SiteServices {
   }
 
   private _getGroup = (groupName : string) =>{
-    return new Promise<SiteGroup>((resolve, reject) => {
+    return new Promise<any[]>((resolve, reject) => {
       try {
-        sp.web.siteGroups.getByName(groupName).get().then((group : SiteGroup) =>{
-          console.log(group);
+        sp.web.siteGroups.getByName(groupName).users.get().then((group) =>{
+          console.log();
           resolve(group);
         });
       } catch (error) {

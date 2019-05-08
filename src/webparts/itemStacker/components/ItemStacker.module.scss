@@ -1,45 +1,121 @@
 @import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss";
 
 :global {
-  .react-sanfona {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 70px;
+  /**
+* ----------------------------------------------
+* Demo styles
+* ----------------------------------------------
+**/
+  .u-position-absolute {
+    position: absolute;
   }
 
-  .react-sanfona-item-title {
-    background-color: $ms-color-themePrimary;
-    border-top: 1px solid #ccc;
-    color: $ms-color-white;
-    padding: 20px;
-    font-weight: $ms-font-weight-semibold;
-    text-transform: uppercase;
-    transition: background-color 0.3s;
-  }
-
-  .react-sanfona-item:first-child .react-sanfona-item-title {
-    border-top: none;
-  }
-
-  .react-sanfona-item-expanded .react-sanfona-item-title {
-    background-color: $ms-color-themeDark;
-    color: $ms-color-white;
-
-    .title-done-btn {
-      display: inline-block;
-      float: right;
-      color: #000;
-    }
-  }
-
-  .react-sanfona-item-body-wrapper {
-    color: #666;
-    padding: 20px;
+  .u-position-relative {
     position: relative;
   }
 
-  .react-sanfona-item-body-wrapper:hover .tooltip {
-    opacity: 1;
+  .accordion {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
+
+  .accordion__item + .accordion__item {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .accordion__item--has-icon {
+    position: relative;
+  }
+
+  .accordion__title {
+    background-color: $ms-color-themePrimary;
+    color: $ms-color-white;
+    cursor: pointer;
+    padding: 18px;
+    text-align: left;
+    border: none;
+    font-size: large;
+  }
+
+  .accordion__title:hover {
+    background-color: $ms-color-themeDark;
+  }
+
+  .accordion__body {
+    padding: 20px;
+    display: block;
+    animation: fadein 0.35s ease-in;
+  }
+
+  .accordion__body--hidden {
+    display: none;
+    opacity: 0;
+    animation: fadein 0.35s ease-in;
+  }
+
+  .accordion__title > *:last-child,
+  .accordion__body > *:last-child {
+    margin-bottom: 0;
+  }
+
+  [aria-expanded="true"].accordion__title {
+    background-color: $ms-color-themeDark
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes move-down {
+    0% {
+      transform: translateY(0);
+    }
+    10% {
+      transform: translateY(0);
+    }
+    20% {
+      transform: translateY(5px);
+    }
+    30% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes move-up {
+    0% {
+      transform: translateY(0);
+    }
+    10% {
+      transform: translateY(0);
+    }
+    20% {
+      transform: translateY(-5px);
+    }
+    30% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .accordion__title--animated:hover .accordion__arrow {
+    animation-name: move-down;
+    animation-duration: 1.5s;
+  }
+
+  .accordion__title--animated[aria-expanded="true"]:hover .accordion__arrow {
+    animation-name: move-up;
+    animation-duration: 1.5s;
   }
 }
 
@@ -76,6 +152,35 @@
   .description {
     @include ms-font-l;
     @include ms-fontColor-white;
+  }
+
+  .isRestricted {
+    background-color: $ms-color-alert;
+    color: $ms-color-white;
+    cursor: pointer;
+    padding: 18px;
+    text-align: left;
+    border: none;
+    font-size: large;
+  }
+
+  .expandButton{
+    button{
+      float: right;
+      font-size: 24px;
+      color: #eb8201 !important;
+      padding-top: 4px;
+      margin-left: 40px;
+    }
+  }
+
+  .warningIcon {
+    i{
+      float: right;
+      font-size: 24px;
+      color: #eb8201 !important;
+      padding-top: 4px;
+    }
   }
 
   .button {

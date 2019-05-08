@@ -3,5 +3,5 @@ export interface IStackerAccordionItem {
   text : string;
   show : boolean;
   isOpen : boolean;
-  state : boolean;
+  isRestricted : boolean;
 }

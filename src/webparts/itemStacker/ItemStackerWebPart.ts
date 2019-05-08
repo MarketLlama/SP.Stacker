@@ -4,7 +4,6 @@ import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField,
   IWebPartPropertiesMetadata,
   IPropertyPaneDropdownOption,
   PropertyPaneDropdown
@@ -116,10 +115,9 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
                       required: true
                     },
                     {
-                      id: "state",
+                      id: "isRestricted",
                       title: "Is restricted?",
                       type: CustomCollectionFieldType.boolean,
-                      required: true
                     },
                     {
                       id: "show",
