@@ -1,127 +1,21 @@
 @import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss";
 
-:global {
-  /**
-* ----------------------------------------------
-* Demo styles
-* ----------------------------------------------
-**/
-  .u-position-absolute {
-    position: absolute;
-  }
+$restrictedColor : #eb8201;
+$restrictedColorDark: darken($restrictedColor, 10%);
 
-  .u-position-relative {
-    position: relative;
-  }
-
-  .accordion {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
-  }
-
-  .accordion__item + .accordion__item {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .accordion__item--has-icon {
-    position: relative;
-  }
-
-  .accordion__title {
-    background-color: $ms-color-themePrimary;
-    color: $ms-color-white;
-    cursor: pointer;
-    padding: 18px;
-    text-align: left;
-    border: none;
-    font-size: large;
-    i{
-      font-size: larger;
-      right: 20px;
-      position: fixed;
-    }
-  }
-
-  .accordion__title:hover {
-    background-color: $ms-color-themeDark;
-  }
-
-  .accordion__body {
-    padding: 20px;
-    display: block;
-    animation: fadein 0.35s ease-in;
-  }
-
-  .accordion__body--hidden {
-    display: none;
-    opacity: 0;
-    animation: fadein 0.35s ease-in;
-  }
-
-  .accordion__title > *:last-child,
-  .accordion__body > *:last-child {
-    margin-bottom: 0;
-  }
-
-  [aria-expanded="true"].accordion__title {
-    background-color: $ms-color-themeDark
-  }
-
-  @keyframes fadein {
-    0% {
+%animation {
+  @keyframes fadeIn {
+    from {
       opacity: 0;
     }
-
-    100% {
+    to {
       opacity: 1;
     }
   }
 
-  @keyframes move-down {
-    0% {
-      transform: translateY(0);
-    }
-    10% {
-      transform: translateY(0);
-    }
-    20% {
-      transform: translateY(5px);
-    }
-    30% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes move-up {
-    0% {
-      transform: translateY(0);
-    }
-    10% {
-      transform: translateY(0);
-    }
-    20% {
-      transform: translateY(-5px);
-    }
-    30% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  .accordion__title--animated:hover .accordion__arrow {
-    animation-name: move-down;
-    animation-duration: 1.5s;
-  }
-
-  .accordion__title--animated[aria-expanded="true"]:hover .accordion__arrow {
-    animation-name: move-up;
-    animation-duration: 1.5s;
-  }
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
 }
 
 .itemStacker {
@@ -209,18 +103,72 @@
     @include ms-fontColor-white;
   }
 
-  .isRestricted {
-    background-color: $ms-color-alert;
-    color: $ms-color-white;
-    cursor: pointer;
-    padding: 18px;
-    text-align: left;
-    border: none;
-    font-size: large;
+  .accordion{
+    @keyframes fadein {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes mymove {
+      0%   {top: 0px;}
+      25%  {top: 200px;}
+      50%  {top: 100px;}
+      75%  {top: 200px;}
+      100% {top: 0px;}
+    }
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    .accordionHeader {
+      background-color: $ms-color-themePrimary;
+      color: $ms-color-white;
+      cursor: pointer;
+      padding: 18px;
+      text-align: left;
+      border: none;
+      font-size: large;
+      margin-bottom: 2px;
+      i{
+        font-size: larger;
+        right: 20px;
+        position: fixed;
+      }
+    } &{
+      .isRestricted {
+        background-color: $restrictedColor;
+        color: $ms-color-white;
+        cursor: pointer;
+        padding: 18px;
+        text-align: left;
+        border: none;
+        font-size: large;
+      }
+      .isRestricted:hover{
+        background-color: $restrictedColorDark !important;
+      }
+    }
+    .accordionHeader:hover {
+      background-color: $ms-color-themeDark;
+    }
+    .accordionContent{
+      @extend %animation;
+    }&{
+      .show{
+        height: auto;
+        display: block;
+        padding: 5px;
+
+      }
+      .hide{
+        display: none;
+        opacity: 0;
+        height: 0px;
+      }
+    }
   }
-
-
-
 
   .button {
     // Our button

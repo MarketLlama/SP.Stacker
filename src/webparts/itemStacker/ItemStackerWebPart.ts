@@ -31,6 +31,7 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
   private loadingIndicator: boolean = true;
 
   public render(): void {
+    console.log(this.properties.restrictedGroup);
     const element: React.ReactElement<IItemStackerProps > = React.createElement(
       ItemStacker,
       {

@@ -24,9 +24,7 @@
     "@types/webpack-env": "1.13.1",
     "office-ui-fabric-react": "^5.132.0",
     "react": "15.6.2",
-    "react-accessible-accordion": "^2.4.5",
-    "react-dom": "15.6.2",
-    "react-light-accordion": "^0.1.4"
+    "react-dom": "15.6.2"
   },
   "devDependencies": {
     "@microsoft/sp-build-web": "1.6.0",
