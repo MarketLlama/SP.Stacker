@@ -35,6 +35,11 @@
     text-align: left;
     border: none;
     font-size: large;
+    i{
+      font-size: larger;
+      right: 20px;
+      position: fixed;
+    }
   }
 
   .accordion__title:hover {
@@ -124,6 +129,56 @@
     margin: 0px auto;
   }
 
+  .buttonRow {
+    width: 100%;
+    box-sizing: border-box;
+    height: 56px;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    overflow: hidden;
+    .iconButton{
+      line-height: 48px;
+      text-align: center;
+      font-size: 26px;
+      width: 48px;
+      height: 48px;
+      -ms-flex: none;
+      flex: none;
+      align-self: center;
+      box-sizing: border-box;
+      position: relative;
+      background-color: $ms-color-neutralLighter;
+      i{
+        font-size: 20px;
+      }
+    }
+    .icon{
+      line-height: 48px;
+      text-align: center;
+      font-size: 26px;
+      width: 48px;
+      height: 48px;
+      -ms-flex: none;
+      flex: none;
+      -ms-flex-item-align: center;
+      align-self: center;
+      box-sizing: border-box;
+      position: relative;
+    }&{
+      .warningIcon {
+        text-align: center;
+        padding-right: 15px;
+        i{
+          float: right;
+          font-size: 28px;
+          color: #eb8201 !important;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
   .row {
     @include ms-Grid-row;
     @include ms-fontColor-white;
@@ -164,24 +219,8 @@
     font-size: large;
   }
 
-  .expandButton{
-    button{
-      float: right;
-      font-size: 24px;
-      color: #eb8201 !important;
-      padding-top: 4px;
-      margin-left: 40px;
-    }
-  }
 
-  .warningIcon {
-    i{
-      float: right;
-      font-size: 24px;
-      color: #eb8201 !important;
-      padding-top: 4px;
-    }
-  }
+
 
   .button {
     // Our button

@@ -32,16 +32,17 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
   public render() {
     return (
       <div>
-        <div>
-          <div className={styles.expandButton}>
-            <IconButton
-              iconProps={{ iconName: 'Emoji2' }}
-              title="Emoji"
+        <div className={styles.buttonRow}>
+          <div>
+            <IconButton className={styles.iconButton}
+              iconProps={{ iconName: 'ChevronFold10' }}
+              title="ChevronFold10"
               onClick={this._expandAllItems}
-              ariaLabel="Emoji" />
+              ariaLabel="Colapse All" />
           </div>
-          <div className={styles.warningIcon}>
-            <Icon iconName="CompassNW"/>
+          <div className={`${styles.icon} ${styles.warningIcon}`}>
+            <Icon iconName="Warning"
+            ariaLabel="Restricted Content below"/>
           </div>
         </div>
         <Accordion accordion={false}>
@@ -54,7 +55,7 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
                     {item.name}
                   </AccordionItemTitle> :
                     <AccordionItemTitle>
-                      {item.name}
+                      {item.name}  <Icon iconName="Remove"/>
                     </AccordionItemTitle>}
                   <AccordionItemBody>
                     <RichText value={item.text}
