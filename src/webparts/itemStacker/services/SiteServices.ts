@@ -2,7 +2,6 @@
 import { sp, ItemAddResult, WebEnsureUserResult } from '@pnp/sp';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { MSGraphClient } from '@microsoft/sp-http';
-import { SiteGroups, SiteGroup } from '@pnp/sp/src/sitegroups';
 
 class SiteServices {
   private _client: MSGraphClient = {} as MSGraphClient;
