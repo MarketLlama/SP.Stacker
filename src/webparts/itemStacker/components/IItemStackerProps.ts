@@ -8,4 +8,5 @@ export interface IItemStackerProps {
   displayMode : DisplayMode;
   fnSetText : Function;
   userInRestrictedGroup : boolean;
+  fPropertyPaneOpen: () => void;
 }

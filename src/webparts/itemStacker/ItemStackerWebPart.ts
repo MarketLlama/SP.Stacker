@@ -31,7 +31,8 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
 
   public render(): void {
     const siteServices = new SiteServices(this.context);
-    siteServices.checkUserInGroup(this.properties.restrictedGroup).then(isInGroup =>{
+    const groupName = this.properties.restrictedGroup? this.properties.restrictedGroup : '';
+    siteServices.checkUserInGroup(groupName).then(isInGroup =>{
       const element: React.ReactElement<IItemStackerProps > = React.createElement(
         ItemStacker,
         {
@@ -41,7 +42,8 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
           fnSetText : (value : string , index : number) =>{
             this.properties.collectionData[index].text = value;
           },
-          userInRestrictedGroup : isInGroup
+          userInRestrictedGroup : isInGroup,
+          fPropertyPaneOpen: this.context.propertyPane.open
         }
       );
 

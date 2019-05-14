@@ -17,6 +17,9 @@ class SiteServices {
     return new Promise<boolean>( async (resolve, reject) => {
       try {
         let isInGroup = false;
+        if(groupName == ''){
+          resolve(isInGroup);
+        }
         const groupUsers : any[] = await this._getGroup(groupName);
         const currentUser = await this._getCurrentUser();
         groupUsers.forEach(user =>{
