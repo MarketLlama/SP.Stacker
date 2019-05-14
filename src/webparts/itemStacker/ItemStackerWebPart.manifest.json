@@ -3,6 +3,7 @@
   "id": "07442648-3fec-4d71-9a5b-46ae6322773e",
   "alias": "ItemStackerWebPart",
   "componentType": "WebPart",
+  "supportedHosts": ["SharePointWebPart"]
 
   // The "*" signifies that the version should be taken from the package.json
   "version": "*",

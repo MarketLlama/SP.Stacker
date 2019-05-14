@@ -1,11 +1,12 @@
 {
   "@microsoft/generator-sharepoint": {
-    "version": "1.6.0",
+    "version": "1.8.0",
     "libraryName": "sp-stacker",
     "libraryId": "f7939989-eb56-452a-8f17-c24ce6b7f2ae",
     "environment": "spo",
     "packageManager": "npm",
     "framework": "react",
-    "isCreatingSolution": true
+    "isCreatingSolution": true,
+    "isDomainIsolated": false
   }
 }

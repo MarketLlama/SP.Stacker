@@ -1,13 +1,8 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version, DisplayMode } from '@microsoft/sp-core-library';
-import {
-  BaseClientSideWebPart,
-  IPropertyPaneConfiguration,
-  IWebPartPropertiesMetadata,
-  IPropertyPaneDropdownOption,
-  PropertyPaneDropdown
-} from '@microsoft/sp-webpart-base';
+import { BaseClientSideWebPart, IWebPartPropertiesMetadata } from "@microsoft/sp-webpart-base";
+import { IPropertyPaneConfiguration, IPropertyPaneDropdownOption, PropertyPaneDropdown } from "@microsoft/sp-property-pane";
 import SiteServices from "./services/SiteServices";
 import * as strings from 'ItemStackerWebPartStrings';
 import ItemStacker from './components/ItemStacker';
