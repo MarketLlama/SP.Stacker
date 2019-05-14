@@ -7,5 +7,5 @@ export interface IItemStackerProps {
   collectionData: IStackerAccordionItem[];
   displayMode : DisplayMode;
   fnSetText : Function;
-  restrictedGroup : string;
+  userInRestrictedGroup : boolean;
 }

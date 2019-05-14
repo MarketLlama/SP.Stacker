@@ -16,7 +16,6 @@ import {
   PropertyFieldCollectionData,
   CustomCollectionFieldType
 } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
-import { PropertyFieldNumber } from '@pnp/spfx-property-controls/lib/PropertyFieldNumber';
 
 
 export interface IItemStackerWebPartProps {
@@ -31,21 +30,24 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
   private loadingIndicator: boolean = true;
 
   public render(): void {
-    console.log(this.properties.restrictedGroup);
-    const element: React.ReactElement<IItemStackerProps > = React.createElement(
-      ItemStacker,
-      {
-        context : this.context,
-        collectionData: this.properties.collectionData? this.properties.collectionData : [],
-        displayMode : this.displayMode,
-        fnSetText : (value : string , index : number) =>{
-          this.properties.collectionData[index].text = value;
-        },
-        restrictedGroup : this.properties.restrictedGroup
-      }
-    );
+    const siteServices = new SiteServices(this.context);
+    siteServices.checkUserInGroup(this.properties.restrictedGroup).then(isInGroup =>{
+      const element: React.ReactElement<IItemStackerProps > = React.createElement(
+        ItemStacker,
+        {
+          context : this.context,
+          collectionData: this.properties.collectionData? this.properties.collectionData : [],
+          displayMode : this.displayMode,
+          fnSetText : (value : string , index : number) =>{
+            this.properties.collectionData[index].text = value;
+          },
+          userInRestrictedGroup : isInGroup
+        }
+      );
 
-    ReactDom.render(element, this.domElement);
+      ReactDom.render(element, this.domElement);
+    });
+
   }
 
   protected onPropertyPaneConfigurationStart(): void {
