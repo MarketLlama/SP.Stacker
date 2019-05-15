@@ -18,9 +18,9 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
     "group": { "default": "Other" },
-    "title": { "default": "Item Stacker" },
-    "description": { "default": "Item Stacker description" },
-    "officeFabricIconFontName": "Page",
+    "title": { "default": "Item Accordion" },
+    "description": { "default": "Item Accordion" },
+    "officeFabricIconFontName": "AutoFillTemplate",
     "properties": {
       "description": "Item Stacker"
     }

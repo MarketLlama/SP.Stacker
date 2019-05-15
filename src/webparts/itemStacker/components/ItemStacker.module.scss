@@ -19,6 +19,7 @@ $restrictedColorDark: darken($restrictedColor, 10%);
 }
 
 .itemStacker {
+  @extend %animation;
   .container {
     margin: 0px auto;
   }

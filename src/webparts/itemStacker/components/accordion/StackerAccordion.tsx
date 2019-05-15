@@ -17,6 +17,7 @@ export interface StackerAccordionState {
   expandAll : boolean;
   hasRestrictedContent? : boolean;
   openList : boolean[];
+  displayMode : boolean;
 }
 
 class StackerAccordion extends React.Component<StackerAccordionProps, StackerAccordionState> {
@@ -28,8 +29,10 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     });
     this.state = {
       openList: openList,
-      expandAll : false
+      expandAll : false,
+      displayMode : true
     };
+    this._editModeFix();
   }
 
   public render() {
@@ -69,7 +72,7 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
                   <div className={styles.accordionContent + ' ' + (openState? styles.show : styles.hide)}>
                     <RichText value={item.text}
                       onChange={(text) => this._setText(text, index)}
-                      isEditMode={(this.props.displayMode == DisplayMode.Edit) ? true : false}
+                      isEditMode={this.state.displayMode}
                     />
                   </div>
                 </div>
@@ -86,6 +89,21 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     return text;
   }
 
+  //TO:DO : wait Until fix then remove...
+  public componentDidUpdate(prevProps  : StackerAccordionProps, prevState : StackerAccordionState) {
+    if(prevProps.displayMode!==this.props.displayMode){
+      this._editModeFix();
+    }
+  }
+
+  private _editModeFix = () =>{
+    setTimeout(() =>{
+      this.setState({
+        displayMode : (this.props.displayMode == DisplayMode.Edit) ? true : false
+      });
+    },10);
+  }
+  //
   private _expandCloseAllItems = () => {
     let list : boolean[]= this.state.openList;
     let explandAll : boolean = this.state.expandAll;
