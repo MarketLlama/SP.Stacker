@@ -20,6 +20,8 @@ export default class ItemStacker extends React.Component<IItemStackerProps, {}> 
             <StackerAccordion items={this.props.collectionData}
               userInRestricted={this.props.userInRestrictedGroup}
               displayMode={this.props.displayMode}
+              showWarning={this.props.showWarning}
+              showOpenClose={this.props.showOpenClose}
               fnUpdate={this.props.fnSetText} />)
             : (
               <Placeholder

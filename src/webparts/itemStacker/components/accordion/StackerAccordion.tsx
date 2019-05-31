@@ -11,6 +11,8 @@ export interface StackerAccordionProps {
   displayMode: DisplayMode;
   fnUpdate: Function;
   userInRestricted: boolean;
+  showWarning : boolean;
+  showOpenClose : boolean;
 }
 
 export interface StackerAccordionState {
@@ -42,21 +44,24 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     const hasRestrictedContent =  (isRestricted.length > 0 && this.props.userInRestricted);
     return (
       <div>
+        {this.props.showOpenClose || this.props.showWarning?
         <div className={styles.buttonRow}>
           <div>
+            {this.props.showOpenClose?
             <IconButton className={styles.iconButton}
               iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
               title="Collapse"
               onClick={this._expandCloseAllItems}
-              ariaLabel="Collapse All" />
+              ariaLabel="Collapse All" /> : null}
           </div>
-          {hasRestrictedContent?
+          {hasRestrictedContent && this.props.showWarning?
             <div className={`${styles.icon} ${styles.warningIcon}`}>
               <Icon iconName="Warning"
                 ariaLabel="Restricted Content below" />
             </div>
           : null }
         </div>
+        : null}
         <div className={styles.accordion}>
           {this.props.items.length > 0 ? this.props.items.map((item, index) => {
             const openState = this.state.openList[index];
@@ -64,7 +69,8 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
               if(item.isRestricted == true && this.props.userInRestricted == false) return;
               return (
                 <div>
-                  <div className={styles.accordionHeader + ' ' +  (item.isRestricted? styles.isRestricted : '')}
+                  <div className={styles.accordionHeader + ' ' + (openState? styles.accordionHeaderOpen : '')
+                    +  ' ' + (item.isRestricted? styles.isRestricted : '')}
                   onClick={() => this._openClose(index)}>
                       {item.name}
                       <Icon iconName={openState? 'Remove': 'Add'}/>

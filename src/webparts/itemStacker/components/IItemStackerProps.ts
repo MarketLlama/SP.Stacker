@@ -6,6 +6,8 @@ export interface IItemStackerProps {
   context : WebPartContext;
   collectionData: IStackerAccordionItem[];
   displayMode : DisplayMode;
+  showWarning :boolean;
+  showOpenClose : boolean;
   fnSetText : Function;
   userInRestrictedGroup : boolean;
   fPropertyPaneOpen: () => void;

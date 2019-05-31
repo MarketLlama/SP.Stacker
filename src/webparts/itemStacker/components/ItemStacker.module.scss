@@ -2,7 +2,11 @@
 
 $restrictedColor : #eb8201;
 $restrictedColorDark: darken($restrictedColor, 10%);
-
+:global{
+  .ql-active .ql-toolbar{
+    position: relative !important;
+  }
+}
 %animation {
   @keyframes fadeIn {
     from {
@@ -124,8 +128,8 @@ $restrictedColorDark: darken($restrictedColor, 10%);
     border: 1px solid rgba(0, 0, 0, 0.1);
 
     .accordionHeader {
-      background-color: $ms-color-themePrimary;
-      color: $ms-color-white;
+      background-color: $ms-color-neutralLight;
+      color: $ms-color-neutralPrimary;
       cursor: pointer;
       padding: 18px;
       text-align: left;
@@ -135,24 +139,22 @@ $restrictedColorDark: darken($restrictedColor, 10%);
       i{
         font-size: larger;
         right: 20px;
-        position: fixed;
+        position: absolute;
       }
     } &{
-      .isRestricted {
-        background-color: $restrictedColor;
-        color: $ms-color-white;
-        cursor: pointer;
-        padding: 18px;
-        text-align: left;
-        border: none;
-        font-size: large;
-      }
+      .accordionHeaderOpen.isRestricted,
       .isRestricted:hover{
-        background-color: $restrictedColorDark !important;
+        background-color: $restrictedColor !important;
+        color: $ms-color-white;
+        transition: all .3s ease-in;
       }
+
     }
-    .accordionHeader:hover {
-      background-color: $ms-color-themeDark;
+    .accordionHeader:hover,
+    .accordionHeaderOpen{
+      background-color: $ms-color-themePrimary;
+      color: $ms-color-white;
+      transition: all .3s ease-in;
     }
     .accordionContent{
       @extend %animation;
