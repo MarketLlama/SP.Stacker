@@ -4,6 +4,7 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 import { DisplayMode } from "@microsoft/sp-core-library";
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import ReactTooltip from 'react-tooltip';
 import styles from "../ItemStacker.module.scss";
 
 export interface StackerAccordionProps {
@@ -48,16 +49,29 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
         <div className={styles.buttonRow}>
           <div>
             {this.props.showOpenClose?
-            <IconButton className={styles.iconButton}
-              iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
-              title="Collapse"
-              onClick={this._expandCloseAllItems}
-              ariaLabel="Collapse All" /> : null}
+            <div>
+              <IconButton className={styles.iconButton}
+                data-tip data-for='expand'
+                iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
+                title="Collapse"
+                onClick={this._expandCloseAllItems}
+                ariaLabel="Collapse/Expand All" />
+                <ReactTooltip id='expand' type='dark' effect='solid'>
+                  <span>Expand/Colapse all sections</span>
+                </ReactTooltip>
+            </div>
+            : null}
           </div>
           {hasRestrictedContent && this.props.showWarning?
-            <div className={`${styles.icon} ${styles.warningIcon}`}>
-              <Icon iconName="Warning"
-                ariaLabel="Restricted Content below" />
+            <div>
+              <div className={`${styles.icon} ${styles.warningIcon}`}>
+                <Icon iconName="Warning"
+                  data-tip data-for='warning'
+                  ariaLabel="Restricted Content below" />
+              </div>
+              <ReactTooltip id='warning' type='dark' effect='solid'>
+                <span>Restricted content is shown below.</span>
+              </ReactTooltip>
             </div>
           : null }
         </div>

@@ -3,7 +3,7 @@
   "solution": {
     "name": "sp-stacker-client-side-solution",
     "id": "f7939989-eb56-452a-8f17-c24ce6b7f2ae",
-    "version": "1.0.0.5",
+    "version": "1.0.0.7",
     "includeClientSideAssets": true,
     "isDomainIsolated": false
   },
