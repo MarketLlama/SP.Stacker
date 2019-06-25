@@ -38,6 +38,9 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
           collectionData: this.properties.collectionData? this.properties.collectionData : [],
           displayMode : this.displayMode,
           fnSetText : (value : string , index : number) =>{
+            if(index == 0){
+              this.properties.text = value;
+            }
             this.properties.collectionData[index].text = value;
           },
           showWarning: this.properties.showWarning,
@@ -46,7 +49,6 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
           fPropertyPaneOpen: this.context.propertyPane.open
         }
       );
-      this.properties.text = (this.properties.collectionData? this.properties.collectionData[0].text: '')
       ReactDom.render(element, this.domElement);
     });
 
@@ -58,6 +60,10 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
       this.context.propertyPane.refresh();
       this.loadingIndicator = false;
     });
+  }
+
+  protected onPropertyPaneFieldChanged() : void{
+    this.properties.text = (this.properties.collectionData? this.properties.collectionData[0].text: '');
   }
 
   protected get propertiesMetadata(): IWebPartPropertiesMetadata {
