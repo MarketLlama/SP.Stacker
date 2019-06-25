@@ -46,35 +46,28 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     return (
       <div>
         {this.props.showOpenClose || this.props.showWarning?
-        <div className={styles.buttonRow}>
-          <div>
+        <ul className={styles.buttonList} >
             {this.props.showOpenClose?
-            <div>
-              <IconButton className={styles.iconButton}
-                data-tip data-for='expand'
-                iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
-                title="Collapse"
-                onClick={this._expandCloseAllItems}
-                ariaLabel="Collapse/Expand All" />
+              <li style={{float : 'left'}}>
+                <a data-tip data-for='expand' onClick={this._expandCloseAllItems} className={styles.basicButton}>
+                    <Icon iconName={this.state.expandAll? 'ChevronUnfold10' :'Chevronfold10'} />
+                </a>
                 <ReactTooltip id='expand' type='dark' effect='solid'>
-                  <span>Expand/Colapse all sections</span>
+                    <span>Expand/Collapse all sections</span>
                 </ReactTooltip>
-            </div>
+              </li>
+             : null}
+            {hasRestrictedContent && this.props.showWarning?
+              <li style={{float : 'right'}}>
+                <a data-tip data-for='warning' className={styles.warningButton}>
+                    <Icon iconName="Important" />
+                </a>
+                <ReactTooltip id='warning' type='dark' effect='solid'>
+                    <span>Restricted content at the end</span>
+                </ReactTooltip>
+              </li>
             : null}
-          </div>
-          {hasRestrictedContent && this.props.showWarning?
-            <div>
-              <div className={`${styles.icon} ${styles.warningIcon}`}>
-                <Icon iconName="Warning"
-                  data-tip data-for='warning'
-                  ariaLabel="Restricted Content below" />
-              </div>
-              <ReactTooltip id='warning' type='dark' effect='solid'>
-                <span>Restricted content is shown below.</span>
-              </ReactTooltip>
-            </div>
-          : null }
-        </div>
+        </ul>
         : null}
         <div className={styles.accordion}>
           {this.props.items.length > 0 ? this.props.items.map((item, index) => {

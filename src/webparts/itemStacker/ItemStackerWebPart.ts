@@ -19,6 +19,7 @@ export interface IItemStackerWebPartProps {
   restrictedGroup : string;
   showOpenClose : boolean;
   showWarning : boolean;
+  text : string;
 }
 
 export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStackerWebPartProps> {
@@ -45,7 +46,7 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
           fPropertyPaneOpen: this.context.propertyPane.open
         }
       );
-
+      this.properties.text = (this.properties.collectionData? this.properties.collectionData[0].text: '')
       ReactDom.render(element, this.domElement);
     });
 
@@ -57,6 +58,12 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
       this.context.propertyPane.refresh();
       this.loadingIndicator = false;
     });
+  }
+
+  protected get propertiesMetadata(): IWebPartPropertiesMetadata {
+    return {
+      'text': { isHtmlString: true }
+    };
   }
 
   protected getSiteGroups = () =>{
@@ -83,11 +90,6 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
-  protected get propertiesMetadata(): IWebPartPropertiesMetadata {
-    return {
-      'collectionData': { isSearchablePlainText: true }
-    };
-  }
 
   protected get dataVersion(): Version {
     return Version.parse('1.0');
