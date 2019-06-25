@@ -4,6 +4,7 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 import { DisplayMode } from "@microsoft/sp-core-library";
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import ReactTooltip from 'react-tooltip';
 import styles from "../ItemStacker.module.scss";
 
 export interface StackerAccordionProps {
@@ -11,6 +12,8 @@ export interface StackerAccordionProps {
   displayMode: DisplayMode;
   fnUpdate: Function;
   userInRestricted: boolean;
+  showWarning : boolean;
+  showOpenClose : boolean;
 }
 
 export interface StackerAccordionState {
@@ -42,21 +45,37 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
     const hasRestrictedContent =  (isRestricted.length > 0 && this.props.userInRestricted);
     return (
       <div>
+        {this.props.showOpenClose || this.props.showWarning?
         <div className={styles.buttonRow}>
           <div>
-            <IconButton className={styles.iconButton}
-              iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
-              title="Collapse"
-              onClick={this._expandCloseAllItems}
-              ariaLabel="Collapse All" />
+            {this.props.showOpenClose?
+            <div>
+              <IconButton className={styles.iconButton}
+                data-tip data-for='expand'
+                iconProps={this.state.expandAll? { iconName: 'ChevronUnfold10' } : {iconName: 'Chevronfold10'}}
+                title="Collapse"
+                onClick={this._expandCloseAllItems}
+                ariaLabel="Collapse/Expand All" />
+                <ReactTooltip id='expand' type='dark' effect='solid'>
+                  <span>Expand/Colapse all sections</span>
+                </ReactTooltip>
+            </div>
+            : null}
           </div>
-          {hasRestrictedContent?
-            <div className={`${styles.icon} ${styles.warningIcon}`}>
-              <Icon iconName="Warning"
-                ariaLabel="Restricted Content below" />
+          {hasRestrictedContent && this.props.showWarning?
+            <div>
+              <div className={`${styles.icon} ${styles.warningIcon}`}>
+                <Icon iconName="Warning"
+                  data-tip data-for='warning'
+                  ariaLabel="Restricted Content below" />
+              </div>
+              <ReactTooltip id='warning' type='dark' effect='solid'>
+                <span>Restricted content is shown below.</span>
+              </ReactTooltip>
             </div>
           : null }
         </div>
+        : null}
         <div className={styles.accordion}>
           {this.props.items.length > 0 ? this.props.items.map((item, index) => {
             const openState = this.state.openList[index];
@@ -64,7 +83,8 @@ class StackerAccordion extends React.Component<StackerAccordionProps, StackerAcc
               if(item.isRestricted == true && this.props.userInRestricted == false) return;
               return (
                 <div>
-                  <div className={styles.accordionHeader + ' ' +  (item.isRestricted? styles.isRestricted : '')}
+                  <div className={styles.accordionHeader + ' ' + (openState? styles.accordionHeaderOpen : '')
+                    +  ' ' + (item.isRestricted? styles.isRestricted : '')}
                   onClick={() => this._openClose(index)}>
                       {item.name}
                       <Icon iconName={openState? 'Remove': 'Add'}/>

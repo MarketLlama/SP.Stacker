@@ -16,7 +16,11 @@
     "@microsoft/sp-office-ui-fabric-core": "1.8.0",
     "@microsoft/sp-webpart-base": "1.8.0",
     "@pnp/pnpjs": "^1.2.3",
+<<<<<<< HEAD
     "@pnp/spfx-controls-react": "^1.13.1",
+=======
+    "@pnp/spfx-controls-react": "^1.13.2",
+>>>>>>> 8a2672342251bb15a07fa566550bda10dfe22a1b
     "@pnp/spfx-property-controls": "1.11.0",
     "@types/es6-promise": "0.0.33",
     "@types/react": "16.4.2",
@@ -24,7 +28,8 @@
     "@types/webpack-env": "1.13.1",
     "office-ui-fabric-react": "^5.132.0",
     "react": "16.7.0",
-    "react-dom": "16.7.0"
+    "react-dom": "16.7.0",
+    "react-tooltip": "^3.10.0"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-2.7": "0.4.0",

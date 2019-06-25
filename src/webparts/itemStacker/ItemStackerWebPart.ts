@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import { BaseClientSideWebPart, IWebPartPropertiesMetadata } from "@microsoft/sp-webpart-base";
-import { IPropertyPaneConfiguration, IPropertyPaneDropdownOption, PropertyPaneDropdown } from "@microsoft/sp-property-pane";
+import { IPropertyPaneConfiguration, IPropertyPaneDropdownOption, PropertyPaneDropdown, PropertyPaneToggle } from "@microsoft/sp-property-pane";
 import SiteServices from "./services/SiteServices";
 import * as strings from 'ItemStackerWebPartStrings';
 import ItemStacker from './components/ItemStacker';
@@ -17,6 +17,8 @@ export interface IItemStackerWebPartProps {
   collectionData: any[];
   numberOfItems : number;
   restrictedGroup : string;
+  showOpenClose : boolean;
+  showWarning : boolean;
 }
 
 export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStackerWebPartProps> {
@@ -37,6 +39,8 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
           fnSetText : (value : string , index : number) =>{
             this.properties.collectionData[index].text = value;
           },
+          showWarning: this.properties.showWarning,
+          showOpenClose :this.properties.showOpenClose,
           userInRestrictedGroup : isInGroup,
           fPropertyPaneOpen: this.context.propertyPane.open
         }
@@ -103,9 +107,9 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
               groupFields: [
                 PropertyFieldCollectionData("collectionData", {
                   key: "collectionData",
-                  label: "Collection data",
-                  panelHeader: "Collection data panel header",
-                  manageBtnLabel: "Manage collection data",
+                  label: "Manage accordion items",
+                  panelHeader: "Accordion Items",
+                  manageBtnLabel: "Manage accordion items",
                   value: this.properties.collectionData,
                   fields: [
                     {
@@ -136,6 +140,14 @@ export default class ItemStackerWebPart extends BaseClientSideWebPart<IItemStack
                   label: "Select Restricted Group",
                   options: this.dropdownOptions,
                 }),
+                PropertyPaneToggle("showOpenClose", {
+                  label: "Show open all / close all button",
+                  checked: false
+                }),
+                PropertyPaneToggle("showWarning", {
+                  label: "Show restricted content warning icon",
+                  checked: false
+                })
               ]
             }
           ]
